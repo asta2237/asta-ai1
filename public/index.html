@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Asta AI - توليد الصور بالذكاء الاصطناعي</title>
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤖</text></svg>">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <div class="logo-text">
+                    <h1>Asta AI</h1>
+                    <div class="tagline">توليد الصور بالذكاء الاصطناعي</div>
+                </div>
+            </div>
+            <div class="points-display" id="header-points">
+                <i class="fas fa-coins"></i>
+                <span id="points-count">5</span>
+            </div>
+            <div class="nav-menu">
+                <button class="nav-btn" id="nav-history" title="معرض الصور">
+                    <i class="fas fa-images"></i>
+                </button>
+                <button class="nav-btn" id="nav-home" title="الصفحة الرئيسية">
+                    <i class="fas fa-home"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="page active" id="page-home">
+            <div class="content-card">
+                <h2>أنشئ صورًا مذهلة بالذكاء الاصطناعي</h2>
+                <p>ادخل وصفًا تفصيليًا للصورة التي تريد إنشاءها</p>
+                <div class="points-section">
+                    <div class="points-header">
+                        <i class="fas fa-coins"></i>
+                        <h3>نظام النقاط</h3>
+                    </div>
+                    <div class="points-details">
+                        <div class="points-detail">
+                            <i class="fas fa-gift"></i>
+                            <p>النقاط الحالية: <strong id="current-points">5</strong></p>
+                        </div>
+                        <div class="points-detail">
+                            <i class="fas fa-image"></i>
+                            <p>كل صورة تكلف: <strong>1 نقطة</strong></p>
+                        </div>
+                    </div>
+                    <div class="ad-section">
+                        <div class="ad-header">
+                            <i class="fas fa-ad"></i>
+                            <h4>احصل على نقاط مجانية</h4>
+                        </div>
+                        <div class="ad-container" id="ad-container">
+                            <div class="monetag-logo">
+                                <i class="fas fa-ad"></i>
+                            </div>
+                            <div class="ad-text" id="ad-status-text">
+                                شاهد إعلانًا واحصل على 3 نقاط مجانية
+                            </div>
+                            <div class="ad-progress" id="ad-progress">
+                                <div class="ad-progress-fill" id="ad-progress-fill"></div>
+                            </div>
+                            <div class="ad-timer" id="ad-timer"></div>
+                        </div>
+                        <button class="action-btn monetag" id="watch-ad-btn">
+                            <i class="fas fa-play-circle"></i> مشاهدة إعلان والحصول على 3 نقاط
+                        </button>
+                        <div class="ad-status ready" id="ad-status">
+                            <i class="fas fa-check-circle"></i> الإعلانات جاهزة
+                        </div>
+                    </div>
+                </div>
+                <div class="language-warning">
+                    <p>
+                        <i class="fas fa-exclamation-triangle"></i> 
+                        <strong>ملاحظة مهمة:</strong> الرجاء كتابة الوصف باللغة الإنجليزية فقط للحصول على أفضل النتائج
+                    </p>
+                </div>
+                <textarea id="prompt" placeholder="أدخل وصف الصورة باللغة الإنجليزية فقط...
+مثال: A futuristic city at sunset with flying cars, glass skyscrapers reflecting golden sunlight, neon lights, cyberpunk style...">A futuristic city at sunset with flying cars</textarea>
+                <div class="style-section">
+                    <h3>اختر النمط الفني:</h3>
+                    <div class="style-options">
+                        <div class="style-option selected" data-style="realistic">
+                            <i class="fas fa-camera"></i>
+                            <span>واقعي</span>
+                            <small>صور فوتوغرافية</small>
+                        </div>
+                        <div class="style-option" data-style="cartoon">
+                            <i class="fas fa-paint-brush"></i>
+                            <span>كرتوني</span>
+                            <small>رسوم كرتونية</small>
+                        </div>
+                        <div class="style-option" data-style="fantasy">
+                            <i class="fas fa-dragon"></i>
+                            <span>خيالي</span>
+                            <small>عوالم سحرية</small>
+                        </div>
+                        <div class="style-option" data-style="anime">
+                            <i class="fas fa-user-ninja"></i>
+                            <span>أنمي</span>
+                            <small>أسلوب ياباني</small>
+                        </div>
+                    </div>
+                </div>
+                <button class="action-btn" id="generate">
+                    <i class="fas fa-magic"></i> توليد الصورة الآن (تكلفة: 1 نقطة)
+                </button>
+                <p class="info-message">
+                    <i class="fas fa-info-circle"></i> يمكنك الحصول على نقاط مجانية عن طريق مشاهدة الإعلانات
+                </p>
+            </div>
+            <div class="content-card gallery-section">
+                <h3><i class="fas fa-history"></i> الصور السابقة</h3>
+                <div class="gallery-grid" id="history-grid"></div>
+                <div class="empty-gallery" id="empty-gallery">
+                    <i class="fas fa-images"></i>
+                    <p>لا توجد صور سابقة</p>
+                    <p>سيتم حفظ الصور التي تنشئها هنا</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="page" id="page-result">
+            <div class="content-card">
+                <h2>الصورة الناتجة</h2>
+                <p>تم إنشاء الصورة بنجاح باستخدام الذكاء الاصطناعي</p>
+                <div class="points-section" style="margin-bottom: 1rem;">
+                    <div class="points-header">
+                        <i class="fas fa-coins"></i>
+                        <h3>النقاط المتبقية</h3>
+                    </div>
+                    <div class="points-details">
+                        <div class="points-detail">
+                            <i class="fas fa-coins"></i>
+                            <p>النقاط الحالية: <strong id="result-points-count">5</strong></p>
+                        </div>
+                        <div class="points-detail">
+                            <i class="fas fa-image"></i>
+                            <p>الصورة السابقة كلفت: <strong>1 نقطة</strong></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="preview-container" id="preview-container">
+                    <img id="result" alt="الصورة المولدة بالذكاء الاصطناعي">
+                    <div class="loading" id="loading">
+                        <div class="spinner"></div>
+                        <p>جاري إنشاء الصورة...</p>
+                        <p class="loading-subtext">قد يستغرق هذا بضع ثوانٍ</p>
+                    </div>
+                </div>
+                <div class="share-section">
+                    <h3><i class="fas fa-share-alt"></i> مشاركة الصورة</h3>
+                    <div class="share-buttons">
+                        <button class="share-btn whatsapp" id="share-whatsapp">
+                            <i class="fab fa-whatsapp"></i>
+                            <span>واتساب</span>
+                        </button>
+                        <button class="share-btn telegram" id="share-telegram">
+                            <i class="fab fa-telegram"></i>
+                            <span>تلغرام</span>
+                        </button>
+                        <button class="share-btn twitter" id="share-twitter">
+                            <i class="fab fa-twitter"></i>
+                            <span>تويتر</span>
+                        </button>
+                        <button class="share-btn facebook" id="share-facebook">
+                            <i class="fab fa-facebook"></i>
+                            <span>فيسبوك</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="link-section">
+                    <h3><i class="fas fa-link"></i> رابط الصورة</h3>
+                    <p>يمكنك نسخ رابط الصورة ومشاركته مع الآخرين</p>
+                    <div class="link-container">
+                        <div class="url-display" id="image-url-display">سيظهر رابط الصورة هنا...</div>
+                        <button class="copy-btn" id="copy-link-btn">
+                            <i class="far fa-copy"></i> نسخ
+                        </button>
+                    </div>
+                </div>
+                <div class="download-options">
+                    <button class="action-btn success" id="direct-download">
+                        <i class="fas fa-download"></i> تحميل الصورة
+                    </button>
+                    <button class="action-btn secondary" id="new-image">
+                        <i class="fas fa-plus"></i> إنشاء صورة جديدة
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="page" id="page-history">
+            <div class="content-card">
+                <h2><i class="fas fa-images"></i> معرض الصور السابقة</h2>
+                <p>استعرض الصور التي أنشأتها سابقًا وأعد استخدام إعداداتها</p>
+                <div class="points-section" style="margin-bottom: 1rem;">
+                    <div class="points-header">
+                        <i class="fas fa-coins"></i>
+                        <h3>النقاط الحالية: <span id="history-points-count">5</span></h3>
+                    </div>
+                </div>
+                <div class="gallery-grid" id="full-history-grid"></div>
+                <div class="empty-gallery" id="full-empty-gallery">
+                    <i class="fas fa-images"></i>
+                    <p>لا توجد صور سابقة</p>
+                    <p>سيتم حفظ الصور التي تنشئها هنا</p>
+                </div>
+                <button class="action-btn secondary" id="back-to-home">
+                    <i class="fas fa-arrow-right"></i> العودة للرئيسية
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-brand">
+            <i class="fas fa-robot"></i>
+            <span>Asta AI</span>
+        </div>
+        <div class="developer-info">تم التطوير بواسطة: عبد الله oum</div>
+        <div class="copyright">© 2026 جميع الحقوق محفوظة</div>
+    </footer>
+
+    <div class="monetag-overlay" id="monetag-overlay">
+        <div class="monetag-ad-container">
+            <div class="monetag-ad-header">
+                <h3>إعلان Monetag</h3>
+                <button class="close-monetag-ad" id="close-monetag-ad">&times;</button>
+            </div>
+            <div class="monetag-ad-content" id="monetag-ad-content">
+                <p>جاري تحميل الإعلان...</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="copy-indicator" id="copy-indicator">
+        <i class="fas fa-check-circle"></i>
+        <h3>تم نسخ الرابط بنجاح!</h3>
+        <p>يمكنك الآن لصق الرابط في أي مكان</p>
+    </div>
+
+    <script src="script.js"></script>
+    <script async src="https://sdk.monetag.net/script/monetag.js"></script>
+</body>
+</html>
